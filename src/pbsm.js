@@ -3,7 +3,7 @@
 // @namespace   vaminta
 // @match       https://www.coolmathgames.com/0-papas-bakeria
 // @grant       none
-// @version     0.1.0
+// @version     0.1.1
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your Papa's Bakeria save data on coolmathgames.com
@@ -13,10 +13,31 @@
 //31/07/2023, 17:49:11, 28/08
 
 const pbsmOptions = {
-    preventGameLoad: false
+    preventGameLoad: false;
 };
 
 const lsKeys = ["//papasbakeria1","//papasbakeria2","//papasbakeria3"]; //localstorage keys
+const pbsmV = "0.1.1";
+const pbsmCSS = `
+.pbsm-imp-button, .pbsm-exp-button{
+    background-color: #1d3752;
+    color: #ffffff;
+    border: 1px #06203b solid;
+    border-radius: 5px;
+    width: 70px;
+    height: 30px;
+}
+
+.pbsm-imp-button:hover, .pbsm-exp-button:hover{
+  background-color: #2d4762;
+}
+`;
+
+function injectCSS(css){
+    let styleE = document.createElement("style");
+    styleE.innerText = css;
+    document.head.appendChild(styleE);
+}
 
 function slotHasSave(slot){
     let result = false;
@@ -113,7 +134,7 @@ function generateHTML(){
 
     let footerP = document.createElement("p");
     footerP.style = "font-size:10px; margin: 2% 0% 0% 0%;";
-    footerP.innerHTML = "version: 0.1.0 ・ Software provided without warranty ・ More info on <a href='https://github.com/Vaminta/papas-bakeria-save-manager'>GitHub</a>"
+    footerP.innerHTML = "version: "+pbsmV+" ・ Software provided without warranty ・ More info on <a href='https://github.com/Vaminta/papas-bakeria-save-manager' target='_blank' >GitHub</a>"
     div.appendChild(footerP);
 
     let parentNode = document.getElementsByClassName("game-meta-body")[0];
@@ -129,6 +150,7 @@ function blockGame(){
 
 function initialise(){
     if(pbsmOptions.preventGameLoad) blockGame();
+    injectCSS(pbsmCSS);
     generateHTML();
 }
 
