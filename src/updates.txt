@@ -1,6 +1,5 @@
-This file contains changes made since last release:
+This file contains changes made since the previous release:
 
-- given github footer link target="_blank" so the webpage isn't unexpectedly unloaded while midgame
-- current version has become const string
-- added injectCSS function to allow css to be easily added to the page
-- injected CSS to style the import & export buttons so they match the sites design more closely
+- Added support for Papa's Freezeria
+- Exported files now follow a new format
+- Imported files are validatated before loaded into the "slots"
