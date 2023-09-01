@@ -1,5 +1,13 @@
-This file contains changes made since the previous release:
+This file contains changes made since the previous release 0.1.0 -> 0.2.0:
 
 - Added support for Papa's Freezeria
 - Exported files now follow a new format
 - Imported files are validatated before loaded into the "slots"
+- GitHub link opens in new tab
+- Added CSS to buttons to match the site theme
+- User notified of import validation errors
+- Added two new userOptions: saveTxtExt & forceImport
+
+Note:
+
+Exported saves from previous version are not compatible with this new update. Please import all save data before updating, or rollback to version 0.1.0 or 0.1.1 to import before updating. This issue is not expected to impact future updates.
