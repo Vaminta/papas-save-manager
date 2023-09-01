@@ -11,20 +11,31 @@
 // @homepageURL https://github.com/Vaminta/papas-bakeria-save-manager
 // ==/UserScript==
 
-//31/07/2023, 17:49:11, 28/08
+//31/07/2023, 17:49:11
+//01/09/2023
 
 psm = new Object();
 
+/*
+USER OPTIONS:
+
+saveTxtExt: (bool) export outputs the file with .txt extension rather than .psm - same contents
+forceImport: (bool) bypass validation checks (not recommended)
+preventGameLoad: (bool) attempts to prevent game loading, useful for internal testing
+
+ */
 psm.userOptions = {
+    saveTxtExt: false,
     forceImport: false,
     preventGameLoad: false
 }
 
+// --------------
 
 psm.version = "0.2.0";
 psm.saveVersion = "001";
 psm.savePrefix = "PSMS"; //PSM save
-psm.saveExt = "txt";
+psm.saveExt = "psm";
 psm.gameList = Object.freeze([
     {
         name:"Papa's Bakeria",
@@ -72,6 +83,7 @@ function slotHasSave(slot){
     return result;
 }
 
+//Generic download function
 function download(filename, text) {
     let element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -91,10 +103,11 @@ function exportSave(slot){
         return;
     }
     const data = psm.savePrefix + psm.saveVersion + psm.game.saveIdentifier + localStorage.getItem(psm.game.lsKeys[slot]);
-    const filename = psm.game.saveName + ".txt";
+    const filename = psm.game.saveName + "." + psm.saveExt;
     download(filename,data);
 }
 
+//Checks content of PSM for validity and returning results as object containing breakdown, useful for providing user feedback
 function isValidSave(data,expGameID){
     if(!data)data = "";
     if(!expGameID) expGameID = psm.game.saveIdentifier;
@@ -134,6 +147,7 @@ function processImport(slot,data){
     }
 }
 
+// Setup file reader then send output to processImport
 function importSave(slot){
     if(slotHasSave(slot)){
         let overwrite = confirm("There is already data in slot " + (slot+1) + ". Are you sure you want to overwrite?");
@@ -200,7 +214,7 @@ function generateHTML(){
 
     let footerP = document.createElement("p");
     footerP.style = "font-size:10px; margin: 2% 0% 0% 0%;";
-    footerP.innerHTML = "version: " + psm.version + " ・ Running game: " + psm.game.name + " ・ Software provided without warranty ・ More info on <a href='https://github.com/Vaminta/papas-bakeria-save-manager' target='_blank' >GitHub</a>"
+    footerP.innerHTML = "Version: " + psm.version + " ・ Running game: " + psm.game.name + " ・ Software provided without warranty ・ More info on <a href='https://github.com/Vaminta/papas-bakeria-save-manager' target='_blank' >GitHub</a>"
     div.appendChild(footerP);
 
     let parentNode = document.getElementsByClassName("game-meta-body")[0];
@@ -208,6 +222,7 @@ function generateHTML(){
     addOnclicks();
 }
 
+// returns singular game object by given key + matching value
 function getGame(key,value){
     let game = null;
     for(let i=0;i<psm.gameList.length;i++){
@@ -232,6 +247,7 @@ function blockGame(){
 
 function initialise(){
     detectGame();
+    if(psm.userOptions.saveTxtExt) psm.saveExt = "txt";
     if(psm.userOptions.preventGameLoad) blockGame();
     injectCSS(pbsmCSS);
     generateHTML();
