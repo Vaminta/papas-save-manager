@@ -3,8 +3,12 @@
 // @namespace   vaminta
 // @match       https://www.coolmathgames.com/0-papas-bakeria
 // @match       https://www.coolmathgames.com/0-papas-freezeria
+// @match       https://www.coolmathgames.com/0-papas-burgeria
+// @match       https://www.coolmathgames.com/0-papas-taco-mia
+// @match       https://www.coolmathgames.com/0-papas-pancakeria
+// @match       https://www.coolmathgames.com/0-papas-cupcakeria
 // @grant       none
-// @version     0.2.0
+// @version     0.3.0
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games on coolmathgames.com
@@ -32,7 +36,7 @@ psm.userOptions = {
 
 // --------------
 
-psm.version = "0.2.0";
+psm.version = "0.3.0";
 psm.saveVersion = "001";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
@@ -50,6 +54,34 @@ psm.gameList = Object.freeze([
         saveName: "papasfreezeria_save",
         saveIdentifier: "09",
         lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"]
+    },
+    {
+        name:"Papa's Burgeria",
+        pathname: "/0-papas-burgeria",
+        saveName: "papasburgeria_save",
+        saveIdentifier: "10",
+        lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"]
+    },
+    {
+        name:"Papa's Taco Mia",
+        pathname: "/0-papas-taco-mia",
+        saveName: "papastacomia_save",
+        saveIdentifier: "11",
+        lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"]
+    },
+    {
+        name:"Papa's Pancakeria",
+        pathname: "/0-papas-pancakeria",
+        saveName: "papaspancakeria_save",
+        saveIdentifier: "12",
+        lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"]
+    },
+    {
+        name:"Papa's Cupcakeria",
+        pathname: "/0-papas-cupcakeria",
+        saveName: "papascupcakeria_save",
+        saveIdentifier: "13",
+        lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"]
     }
 ]);
 
