@@ -4,6 +4,8 @@ WORKING:
 - Added support for Papa's Taco Mia
 - Added support for Papa's Pancakeria
 - Added support for Papa's Cupcakeria
+- Added support for Papa's Cheeseria
+- Removed some console output
 
 VERSION 0.2.0
 

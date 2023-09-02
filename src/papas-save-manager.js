@@ -7,6 +7,7 @@
 // @match       https://www.coolmathgames.com/0-papas-taco-mia
 // @match       https://www.coolmathgames.com/0-papas-pancakeria
 // @match       https://www.coolmathgames.com/0-papas-cupcakeria
+// @match       https://www.coolmathgames.com/0-papas-cheeseria
 // @grant       none
 // @version     0.3.0
 // @author      Vaminta
@@ -82,6 +83,13 @@ psm.gameList = Object.freeze([
         saveName: "papascupcakeria_save",
         saveIdentifier: "13",
         lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"]
+    },
+    {
+        name:"Papa's Cheeseria",
+        pathname: "/0-papas-cheeseria",
+        saveName: "papascheeseria_save",
+        saveIdentifier: "14",
+        lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"]
     }
 ]);
 
@@ -234,7 +242,7 @@ function generateHTML(){
     div.id = "pbsm-cont"; //papas save manager container
     div.className = "game-meta-body";
     div.style = "padding-bottom: 1%;";
-    let genHTML = "<h2>Save Manager</h2><p>This save manager allows you to import and export saves to ensure they are never lost. Saves can also be moved between devices.</p>";
+    let genHTML = "<h2>Save Manager</h2><p>This save manager allows you to import and export saves to ensure they are never lost. Saves can also be moved between devices. The page may need to be refreshed before imported saves are visible.</p>";
     genHTML += genTableHTML();
     div.innerHTML = genHTML;
 
@@ -268,7 +276,6 @@ function getGame(key,value){
 
 function detectGame(){
     psm.game = getGame("pathname", window.location.pathname);
-    console.log(psm.game);
 }
 
 //attempt to prevent the game from loading
@@ -279,6 +286,7 @@ function blockGame(){
 
 function initialise(){
     detectGame();
+    document.getElementById("game-fullscreen").onclick = () => cmg_start_game_full_screen();
     if(psm.userOptions.saveTxtExt) psm.saveExt = "txt";
     if(psm.userOptions.preventGameLoad) blockGame();
     injectCSS(pbsmCSS);
