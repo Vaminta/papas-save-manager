@@ -10,7 +10,11 @@
 // @match       https://www.coolmathgames.com/0-papas-cheeseria
 //
 // @match       https://www.crazygames.com/game/papa-s-burgeria
+// @match       https://www.crazygames.com/game/papas-bakeria
+//
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
+// @match       https://games.crazygames.com/en_US/papas-bakeria/index.html
+// @match       https://files.crazygames.com/*
 // @grant       none
 // @version     0.4.0
 // @author      Vaminta
@@ -36,7 +40,7 @@ psm.userOptions = {
     saveTxtExt: false,
     forceImport: false,
     otherPageAdjustments: false,
-    preventGameLoad: false
+    preventGameLoad: true
 }
 
 // --------------
@@ -51,12 +55,19 @@ psm.gameList = Object.freeze([
         pathname: "/0-papas-bakeria",
         saveName: "papasbakeria_save",
         saveIdentifier: "08",
-        lsKeys: ["//papasbakeria1","//papasbakeria2","//papasbakeria3"],
         hosts:[
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-bakeria",
+                lsKeys: ["//papasbakeria1","//papasbakeria2","//papasbakeria3"],
                 iframe: ""
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-bakeria",
+                lsKeys: ["files.crazygames.com//papasbakeria1","files.crazygames.com//papasbakeria2","files.crazygames.com//papasbakeria3"],
+                nest:1,
+                iframe: "#game-iframe"
             }
         ]
     },
@@ -65,11 +76,11 @@ psm.gameList = Object.freeze([
         pathname: "/0-papas-freezeria",
         saveName: "papasfreezeria_save",
         saveIdentifier: "09",
-        lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
         hosts:[
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-freezeria",
+                lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
                 iframe: ""
             }
         ]
@@ -79,16 +90,17 @@ psm.gameList = Object.freeze([
         pathname: "/0-papas-burgeria",
         saveName: "papasburgeria_save",
         saveIdentifier: "10",
-        lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
         hosts:[
             {
                 hostname: "www.coolmathgames.com",
-                pathname: "/0-papas-bakeria",
+                pathname: "/0-papas-burgeria",
+                lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
                 iframe: ""
             },
             {
                 hostname: "www.crazygames.com",
                 pathname: "/game/papa-s-burgeria",
+                lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
                 iframe: "#game-iframe"
             }
         ]
@@ -98,11 +110,11 @@ psm.gameList = Object.freeze([
         pathname: "/0-papas-taco-mia",
         saveName: "papastacomia_save",
         saveIdentifier: "11",
-        lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"],
         hosts:[
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-taco-mia",
+                lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"],
                 iframe: ""
             }
         ]
@@ -112,11 +124,11 @@ psm.gameList = Object.freeze([
         pathname: "/0-papas-pancakeria",
         saveName: "papaspancakeria_save",
         saveIdentifier: "12",
-        lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"],
         hosts:[
             {
                 hostname: "www.coolmathgames.com",
-                pathname: "/0-papas-bakeria",
+                pathname: "/0-papas-pancakeria",
+                lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"],
                 iframe: ""
             }
         ]
@@ -126,11 +138,11 @@ psm.gameList = Object.freeze([
         pathname: "/0-papas-cupcakeria",
         saveName: "papascupcakeria_save",
         saveIdentifier: "13",
-        lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"],
         hosts:[
             {
                 hostname: "www.coolmathgames.com",
-                pathname: "/0-papas-bakeria",
+                pathname: "/0-papas-cupcakeria",
+                lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"],
                 iframe: ""
             }
         ]
@@ -140,17 +152,17 @@ psm.gameList = Object.freeze([
         pathname: "/0-papas-cheeseria",
         saveName: "papascheeseria_save",
         saveIdentifier: "14",
-        lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"],
         hosts:[
             {
                 hostname: "www.coolmathgames.com",
-                pathname: "/0-papas-bakeria",
+                pathname: "/0-papas-cheeseria",
+                lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"],
                 iframe: ""
             }
         ]
     }
 ]);
-psm.iframeLocations = ["https://games.crazygames.com/en_US/papa-s-burgeria/index.html"];
+psm.iframeLocations = ["https://games.crazygames.com/en_US/papa-s-burgeria/index.html","https://games.crazygames.com/en_US/papas-bakeria/index.html","https://files.crazygames.com/"];
 psm._idCount = 0;
 psm.newID = () => {psm._idCount++; return psm._idCount};
 psm.lsCallbacks = [];
@@ -171,6 +183,12 @@ const pbsmCSS = `
 .pbsm-imp-button:hover, .pbsm-exp-button:hover{
     background-color: #2d4762;
 }
+
+.crazygamesCont {
+    border: 2px white solid;
+    padding: 3%;
+    border-radius: 10px;
+}
 `;
 
 function injectCSS(css){
@@ -179,8 +197,9 @@ function injectCSS(css){
     document.head.appendChild(styleE);
 }
 
+//not working as of 0.4.0 (not async compat)
 function slotHasSave(slot){
-    return true;
+    return false;
     let result = false;
     const data = localStorage.getItem(psm.game.lsKeys[slot]);
     if(data!=null&&data.length>20) result = true;
@@ -202,13 +221,17 @@ function download(filename, text) {
 }
 
 function exportSave(slot){
-
+/*
     if(!slotHasSave(slot)){
         alert("No save in slot " + (slot+1) + " detected!");
         return;
-    }
+    }*/
     getSlot(slot,function(e){
         const data = psm.savePrefix + psm.saveVersion + psm.game.saveIdentifier + e;
+        if(!e){
+            alert("No save in slot " + (slot+1) + " detected!");
+            return;
+        }
         const filename = psm.game.saveName + "." + psm.saveExt;
         download(filename,data);
     });
@@ -233,11 +256,12 @@ function isValidSave(data,expGameID){
 
 function processImport(slot,data){
     const fileValidity = isValidSave(data);
-    const key = psm.game.lsKeys[slot];
+    //const key = psm.game.lsKeys[slot];
     const forceLoad = psm.userOptions.forceImport;
     if(fileValidity.conclusion || forceLoad){ //continue to load
         const importData = data.slice(9);
-        localStorage.setItem(key,importData);
+        setSlot(slot,importData);
+        //localStorage.setItem(key,importData);
     }
     else{ // do not load -> show error
         let errorMsg = "PSM Import Error: \n\n";
@@ -306,6 +330,7 @@ function generateHTML(){
     let div = document.createElement("div");
     div.id = "pbsm-cont"; //papas save manager container
     div.className = "game-meta-body";
+    if(window.location.host=="www.crazygames.com") div.className += " crazygamesCont";
     div.style = "padding-bottom: 1%;";
     let genHTML = "<h2>Save Manager</h2><p>This save manager allows you to import and export saves to ensure they are never lost. Saves can also be moved between devices. The page may need to be refreshed before imported saves are visible.</p>";
     genHTML += genTableHTML();
@@ -337,22 +362,44 @@ function generateHTML(){
 function getSlot(slot,callback){
     //console.log(slot+callback);
     if(!callback) return;
+    const lsKey = String(psm.gameHost.lsKeys[slot]);
     if(psm.gameHost.iframe.length>2){
         const entID = psm.newID();
         let callbackEntry = [];
         callbackEntry[0] = entID;
         callbackEntry[1] = callback;
         psm.lsCallbacks.push(callbackEntry);
-        const lsKey = String(psm.game.lsKeys[slot]);
         let newMessage = {
             id: entID,
             task: "getLS",
             params: [lsKey]
         };
+        if(psm.gameHost.nest) newMessage.nest = psm.gameHost.nest;
+        else newMessage.nest = 0;
         console.log(newMessage);
         document.querySelector(psm.gameHost.iframe).contentWindow.postMessage(newMessage,"*");
     }
+    else{
+        let data = localStorage.getItem(lsKey);
+        callback(data);
+    }
+}
 
+function setSlot(slot,value,callback){ //callback not supported yet
+    if(!value)return;
+    const lsKey = String(psm.gameHost.lsKeys[slot]);
+    if(psm.gameHost.iframe.length>2){
+        let newMessage = {
+            id: 0,  //N/A
+            task: "setLS",
+            params: [lsKey,value]
+        };
+        console.log(newMessage);
+        document.querySelector(psm.gameHost.iframe).contentWindow.postMessage(newMessage,"*");
+    }
+    else{
+        localStorage.setItem(lsKey,value);
+    }
 }
 
 //get host by key value pair. Checks all games
@@ -401,8 +448,10 @@ function detectGame(){
 
 //attempt to prevent the game from loading
 function blockGame(){
-    let wrapper = document.getElementById("swfgamewrapper");
-    wrapper.innerHTML = "";
+    if(window.location.hostname=="www.coolmathgames.com"){
+        let wrapper = document.getElementById("swfgamewrapper");
+        wrapper.innerHTML = "";
+    }
 }
 
 function pageAdjustments(){
@@ -428,8 +477,18 @@ function iframeReceiveMessage(event){
     data.task
     data.params
     */
-    const data = event.data;
+    let data = event.data;
+    console.log(window.location.host+" received "+data);
     if(!data) return;
+    if(data.nest>0){
+        data.nest--;
+        document.getElementsByTagName("iframe")[0].contentWindow.postMessage(data,"*");
+        return;
+    }
+    if(data.type=="lsReply"){
+        window.parent.postMessage(data,"*");
+        return;
+    }
     let response = {
         id: data.id,
         type: "lsReply",
@@ -446,7 +505,7 @@ function iframeReceiveMessage(event){
 }
 
 function isIframeLocation(){
-    const location = window.location.href;
+    const location = window.location.origin + window.location.pathname; //better than location.href because doesn't include ? search
     let result = false;
     for(const loc of psm.iframeLocations){
         if(loc==location){
@@ -458,12 +517,14 @@ function isIframeLocation(){
 }
 
 function initialise(){
-    if(isIframeLocation()){
+    detectGame();
+    if(!psm.game){
         window.addEventListener("message", iframeReceiveMessage, false);
+        console.log("PSM iframe script loaded at: "+window.location.href);
         return;
     }
     window.addEventListener("message", receiveMessage, false);
-    detectGame();
+
     if(psm.userOptions.otherPageAdjustments) pageAdjustments();
     if(psm.userOptions.saveTxtExt) psm.saveExt = "txt";
     if(psm.userOptions.preventGameLoad) blockGame();
