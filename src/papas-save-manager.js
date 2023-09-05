@@ -60,14 +60,14 @@ psm.gameList = Object.freeze([
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-bakeria",
                 lsKeys: ["//papasbakeria1","//papasbakeria2","//papasbakeria3"],
-                iframe: ""
+                iframe: []
             },
             {
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-bakeria",
                 lsKeys: ["files.crazygames.com//papasbakeria1","files.crazygames.com//papasbakeria2","files.crazygames.com//papasbakeria3"],
-                nest:1,
-                iframe: "#game-iframe"
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -81,7 +81,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-freezeria",
                 lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
-                iframe: ""
+                iframe: []
             }
         ]
     },
@@ -95,13 +95,13 @@ psm.gameList = Object.freeze([
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-burgeria",
                 lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
-                iframe: ""
+                iframe: []
             },
             {
                 hostname: "www.crazygames.com",
                 pathname: "/game/papa-s-burgeria",
                 lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
-                iframe: "#game-iframe"
+                iframe: ["#game-iframe"]
             }
         ]
     },
@@ -115,7 +115,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-taco-mia",
                 lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"],
-                iframe: ""
+                iframe: []
             }
         ]
     },
@@ -129,7 +129,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-pancakeria",
                 lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"],
-                iframe: ""
+                iframe: []
             }
         ]
     },
@@ -143,7 +143,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-cupcakeria",
                 lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"],
-                iframe: ""
+                iframe: []
             }
         ]
     },
@@ -157,7 +157,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-cheeseria",
                 lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"],
-                iframe: ""
+                iframe: []
             }
         ]
     }
@@ -363,7 +363,7 @@ function getSlot(slot,callback){
     //console.log(slot+callback);
     if(!callback) return;
     const lsKey = String(psm.gameHost.lsKeys[slot]);
-    if(psm.gameHost.iframe.length>2){
+    if(psm.gameHost.iframe.length>0){
         const entID = psm.newID();
         let callbackEntry = [];
         callbackEntry[0] = entID;
@@ -377,7 +377,7 @@ function getSlot(slot,callback){
         if(psm.gameHost.nest) newMessage.nest = psm.gameHost.nest;
         else newMessage.nest = 0;
         console.log(newMessage);
-        document.querySelector(psm.gameHost.iframe).contentWindow.postMessage(newMessage,"*");
+        document.querySelector(psm.gameHost.iframe[0]).contentWindow.postMessage(newMessage,"*");
     }
     else{
         let data = localStorage.getItem(lsKey);
@@ -388,19 +388,69 @@ function getSlot(slot,callback){
 function setSlot(slot,value,callback){ //callback not supported yet
     if(!value)return;
     const lsKey = String(psm.gameHost.lsKeys[slot]);
-    if(psm.gameHost.iframe.length>2){
+    if(psm.gameHost.iframe.length>0){
         let newMessage = {
             id: 0,  //N/A
             task: "setLS",
             params: [lsKey,value]
         };
         console.log(newMessage);
-        document.querySelector(psm.gameHost.iframe).contentWindow.postMessage(newMessage,"*");
+        document.querySelector(psm.gameHost.iframe[0]).contentWindow.postMessage(newMessage,"*");
     }
     else{
         localStorage.setItem(lsKey,value);
     }
 }
+
+//Receive message from game iframe - handle returned localstorage data
+function receiveMessage(event){
+    const data = event.data;
+    console.log(data);
+    if(data.type=="lsReply"){
+        for(let i=0;i<psm.lsCallbacks.length;i++){
+            let entry = psm.lsCallbacks[i];
+            if(entry[0]==data.id) entry[1](data.content); //callback()
+        }
+    }
+}
+
+//Function for when this is injected into iframe
+function iframeReceiveMessage(event){
+    /*
+    data.id
+    data.task
+    data.params
+    */
+    let data = event.data;
+    console.log(window.location.host+" received "+data);
+    if(!data) return;
+
+    //Nest experimentation
+    if(data.nest>0){
+        data.nest--;
+        document.getElementsByTagName("iframe")[0].contentWindow.postMessage(data,"*");
+        return;
+    }
+    if(data.type=="lsReply"){
+        window.parent.postMessage(data,"*");
+        return;
+    }
+    //-------
+    let response = {
+        id: data.id,
+        type: "lsReply",
+        content: null
+    };
+    if(data.task=="getLS"){
+        let result = localStorage.getItem(data.params[0]);
+        response.content = result;
+        window.parent.postMessage(response,"*");
+    }
+    else if(data.task=="setLS"){
+        localStorage.setItem(data.params[0],data.params[1]);
+    }
+}
+
 
 //get host by key value pair. Checks all games
 function getHost(key,value){
@@ -458,51 +508,6 @@ function pageAdjustments(){
     document.getElementById("game-fullscreen").onclick = () => cmg_start_game_full_screen();
 }
 
-//Receive message from game iframe - handle returned localstorage data
-function receiveMessage(event){
-    const data = event.data;
-    console.log(data);
-    if(data.type=="lsReply"){
-        for(let i=0;i<psm.lsCallbacks.length;i++){
-            let entry = psm.lsCallbacks[i];
-            if(entry[0]==data.id) entry[1](data.content); //callback()
-        }
-    }
-}
-
-//Function for when this is injected into iframe
-function iframeReceiveMessage(event){
-    /*
-    data.id
-    data.task
-    data.params
-    */
-    let data = event.data;
-    console.log(window.location.host+" received "+data);
-    if(!data) return;
-    if(data.nest>0){
-        data.nest--;
-        document.getElementsByTagName("iframe")[0].contentWindow.postMessage(data,"*");
-        return;
-    }
-    if(data.type=="lsReply"){
-        window.parent.postMessage(data,"*");
-        return;
-    }
-    let response = {
-        id: data.id,
-        type: "lsReply",
-        content: null
-    };
-    if(data.task=="getLS"){
-        let result = localStorage.getItem(data.params[0]);
-        response.content = result;
-        window.parent.postMessage(response,"*");
-    }
-    else if(data.task=="setLS"){
-        localStorage.setItem(data.params[0],data.params[1]);
-    }
-}
 
 function isIframeLocation(){
     const location = window.location.origin + window.location.pathname; //better than location.href because doesn't include ? search
@@ -518,24 +523,34 @@ function isIframeLocation(){
 
 function initialise(){
     detectGame();
-    if(!psm.game){
+    if(!psm.game){ // if iframe script
         window.addEventListener("message", iframeReceiveMessage, false);
         console.log("PSM iframe script loaded at: "+window.location.href);
         return;
     }
     window.addEventListener("message", receiveMessage, false);
 
+    if(psm.gameHost.makeIframe){
+        let iframey = document.createElement("iframe");
+        iframey.id = psm.gameHost.makeIframe[0];
+        iframey.src = psm.gameHost.makeIframe[1];
+        iframey.className = "hiddeny";
+        document.body.appendChild(iframey);
+    }
+
     if(psm.userOptions.otherPageAdjustments) pageAdjustments();
     if(psm.userOptions.saveTxtExt) psm.saveExt = "txt";
     if(psm.userOptions.preventGameLoad) blockGame();
     injectCSS(pbsmCSS);
-    var interval = setInterval(function(){ //for crazygames doesn't like adding html too early!
-	if(document.readyState=="complete"){
-		clearInterval(interval);
-		generateHTML();
-	}
-},200);
-    //generateHTML();
+    if(window.location.host=="www.crazygames.com"){
+        var interval = setInterval(function(){ //for crazygames doesn't like adding html too early!
+	        if(document.readyState=="complete"){
+		        clearInterval(interval);
+		        generateHTML();
+	        }
+        },200);
+    }
+    else generateHTML();
 }
 
 initialise();
