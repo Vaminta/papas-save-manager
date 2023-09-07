@@ -11,8 +11,15 @@
 //
 // @match       https://www.crazygames.com/game/papa-s-burgeria
 // @match       https://www.crazygames.com/game/papas-bakeria
+// @match       https://www.crazygames.com/game/papas-freezeria
+// @match       https://www.crazygames.com/game/papas-taco-mia
+// @match       https://www.crazygames.com/game/papas-pancakeria
+// @match       https://www.crazygames.com/game/papas-cupcakeria
+// @match       https://www.crazygames.com/game/papas-cheeseria
 //
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
+// @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
+//
 // @match       https://games.crazygames.com/en_US/papas-bakeria/index.html
 // @match       https://files.crazygames.com/*
 // @grant       none
@@ -82,6 +89,12 @@ psm.gameList = Object.freeze([
                 pathname: "/0-papas-freezeria",
                 lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
                 iframe: []
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-freezeria",
+                lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
+                iframe: ["#game-iframe"]
             }
         ]
     },
@@ -116,6 +129,13 @@ psm.gameList = Object.freeze([
                 pathname: "/0-papas-taco-mia",
                 lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"],
                 iframe: []
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-taco-mia",
+                lsKeys: ["files.crazygames.com//papastaqueria_1","files.crazygames.com//papastaqueria_2","files.crazygames.com//papastaqueria_3"],
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -130,6 +150,13 @@ psm.gameList = Object.freeze([
                 pathname: "/0-papas-pancakeria",
                 lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"],
                 iframe: []
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-pancakeria",
+                lsKeys: ["files.crazygames.com//papaspancakeria_1","files.crazygames.com//papaspancakeria_2","files.crazygames.com//papaspancakeria_3"],
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -144,6 +171,13 @@ psm.gameList = Object.freeze([
                 pathname: "/0-papas-cupcakeria",
                 lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"],
                 iframe: []
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-cupcakeria",
+                lsKeys: ["files.crazygames.com//papascupcakeria1","files.crazygames.com//papascupcakeria2","files.crazygames.com//papascupcakeria3"],
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -158,6 +192,13 @@ psm.gameList = Object.freeze([
                 pathname: "/0-papas-cheeseria",
                 lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"],
                 iframe: []
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-cheeseria",
+                lsKeys: ["files.crazygames.com//papascheeseria1","files.crazygames.com//papascheeseria2","files.crazygames.com//papascheeseria3"],
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     }

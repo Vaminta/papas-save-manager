@@ -1,5 +1,9 @@
 WORKING:
 
+- Added support for crazygames.com
+
+VERSION 0.3.0:
+
 - Added support for Papa's Burgeria
 - Added support for Papa's Taco Mia
 - Added support for Papa's Pancakeria
