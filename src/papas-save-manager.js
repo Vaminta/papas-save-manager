@@ -53,9 +53,23 @@ psm.userOptions = {
 // --------------
 
 psm.version = "0.4.0";
-psm.saveVersion = "001";
+psm.saveVersion = "002";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
+psm.hostList = [
+    {
+        name: "Cool Math Games",
+        hostname: "www.coolmathgames.com",
+        saveIdentifier: "08",
+        saveNameSignature: "cmg"
+    },
+    {
+        name: "Crazy Games",
+        hostname: "www.crazygames.com",
+        saveIdentifier: "09",
+        saveNameSignature: "cg"
+    }
+];
 psm.gameList = Object.freeze([
     {
         name:"Papa's Bakeria",
@@ -210,6 +224,7 @@ psm.lsCallbacks = [];
 // [id,callback,date]
 psm.game = null;
 psm.gameHost = null;
+psm.hostDetails = null;
 
 const pbsmCSS = `
 .pbsm-imp-button, .pbsm-exp-button{
@@ -268,7 +283,7 @@ function exportSave(slot){
         return;
     }*/
     getSlot(slot,function(e){
-        const data = psm.savePrefix + psm.saveVersion + psm.game.saveIdentifier + e;
+        const data = psm.savePrefix + psm.saveVersion + psm.game.saveIdentifier + psm.hostDetails.saveIdentifier + e;
         if(!e){
             alert("No save in slot " + (slot+1) + " detected!");
             return;
@@ -300,7 +315,7 @@ function processImport(slot,data){
     //const key = psm.game.lsKeys[slot];
     const forceLoad = psm.userOptions.forceImport;
     if(fileValidity.conclusion || forceLoad){ //continue to load
-        const importData = data.slice(9);
+        const importData = data.slice(11);
         setSlot(slot,importData);
         //localStorage.setItem(key,importData);
     }
@@ -532,9 +547,21 @@ function getGame(key,value){
     return game;
 }
 
+function getHostDetails(key,value){
+    let hostDetails = null;
+    for(let i=0;i<psm.hostList.length;i++){
+        if(psm.hostList[i][key]==value){
+            hostDetails = psm.hostList[i];
+            break;
+        }
+    }
+    return hostDetails;
+}
+
 function detectGame(){
     psm.game = getGame("pathname", window.location.pathname);
     psm.gameHost = getHost("pathname", window.location.pathname);
+    if(psm.gameHost) psm.hostDetails = getHostDetails("hostname",psm.gameHost.hostname);
 }
 
 //attempt to prevent the game from loading
