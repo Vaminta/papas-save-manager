@@ -20,13 +20,12 @@
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
 //
-// @match       https://games.crazygames.com/en_US/papas-bakeria/index.html
 // @match       https://files.crazygames.com/*
 // @grant       none
 // @version     0.4.0
 // @author      Vaminta
 // @run-at      document-idle
-// @description Allows you to backup your save data for the Papa's series of games on coolmathgames.com
+// @description Allows you to backup your save data for the Papa's series of games online
 // @homepageURL https://github.com/Vaminta/papas-save-manager
 // ==/UserScript==
 
@@ -217,7 +216,7 @@ psm.gameList = Object.freeze([
         ]
     }
 ]);
-psm.iframeLocations = ["https://games.crazygames.com/en_US/papa-s-burgeria/index.html","https://games.crazygames.com/en_US/papas-bakeria/index.html","https://files.crazygames.com/"];
+//psm.iframeLocations = ["https://games.crazygames.com/en_US/papa-s-burgeria/index.html","https://games.crazygames.com/en_US/papas-bakeria/index.html","https://files.crazygames.com/"];
 psm._idCount = 0;
 psm.newID = () => {psm._idCount++; return psm._idCount};
 psm.lsCallbacks = [];
@@ -277,21 +276,29 @@ function download(filename, text) {
 }
 
 function exportSave(slot){
-/*
-    if(!slotHasSave(slot)){
-        alert("No save in slot " + (slot+1) + " detected!");
-        return;
-    }*/
     getSlot(slot,function(e){
         const data = psm.savePrefix + psm.saveVersion + psm.game.saveIdentifier + psm.hostDetails.saveIdentifier + e;
         if(!e){
             alert("No save in slot " + (slot+1) + " detected!");
             return;
         }
-        const filename = psm.game.saveName + "." + psm.saveExt;
+        const filename = psm.game.saveName + "_" + psm.hostDetails.saveNameSignature + "." + psm.saveExt;
         download(filename,data);
     });
 
+}
+
+function upgradeSave(data){
+    const saveVersion = data.slice(4,7);
+    let upgradedSave = "";
+    if(saveVersion == "001"){
+        let header = data.slice(0,9);
+        let body = data.slice(9);
+        header += "08"; //version 1 only supported cmg; must be on cmg
+        upgradedSave = header+body;
+    }
+    console.log("upgraded save");
+    return upgradedSave;
 }
 
 //Checks content of PSM for validity and returning results as object containing breakdown, useful for providing user feedback
@@ -303,16 +310,18 @@ function isValidSave(data,expGameID){
         isPSMS: data.slice(0,4)==psm.savePrefix ? true : false,
         isNotTimeTraveller: parseInt(data.slice(4,7)) <= parseInt(psm.saveVersion) ? true : false, //save isn't from future version of psm
         isCorrectGame: (expGameID=="*" || data.slice(7,9) == psm.game.saveIdentifier) ? true : false,
+        isSupportedHost: (data.slice(0,11)==psm.hostDetails.saveIdentifier) ? true : false,
         isEncoded: true, //implement later
         conclusion: false
     };
-    result.conclusion = (result.isNotEmpty && result.isPSMS && result.isNotTimeTraveller && result.isCorrectGame && result.isEncoded) ? true : false;
+    result.conclusion = (result.isNotEmpty && result.isPSMS && result.isNotTimeTraveller && result.isCorrectGame && result.isSupportedHost && result.isEncoded) ? true : false;
     return result;
 }
 
 function processImport(slot,data){
+    const saveVersion = data.slice(4,7);
+    if(saveVersion=="001") data = upgradeSave(data);
     const fileValidity = isValidSave(data);
-    //const key = psm.game.lsKeys[slot];
     const forceLoad = psm.userOptions.forceImport;
     if(fileValidity.conclusion || forceLoad){ //continue to load
         const importData = data.slice(11);
@@ -616,7 +625,7 @@ function initialise(){
 		        clearInterval(interval);
 		        generateHTML();
 	        }
-        },200);
+        },250);
     }
     else generateHTML();
 }
