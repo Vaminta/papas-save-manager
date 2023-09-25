@@ -46,7 +46,7 @@ psm.userOptions = {
     saveTxtExt: false,
     forceImport: false,
     otherPageAdjustments: false,
-    preventGameLoad: true
+    preventGameLoad: false
 }
 
 // --------------
@@ -244,6 +244,10 @@ const pbsmCSS = `
     padding: 3%;
     border-radius: 10px;
 }
+
+.hiddeny {
+    display:none;
+}
 `;
 
 function injectCSS(css){
@@ -310,7 +314,7 @@ function isValidSave(data,expGameID){
         isPSMS: data.slice(0,4)==psm.savePrefix ? true : false,
         isNotTimeTraveller: parseInt(data.slice(4,7)) <= parseInt(psm.saveVersion) ? true : false, //save isn't from future version of psm
         isCorrectGame: (expGameID=="*" || data.slice(7,9) == psm.game.saveIdentifier) ? true : false,
-        isSupportedHost: (data.slice(0,11)==psm.hostDetails.saveIdentifier) ? true : false,
+        isSupportedHost: (data.slice(9,11)==psm.hostDetails.saveIdentifier) ? true : false,
         isEncoded: true, //implement later
         conclusion: false
     };
@@ -335,6 +339,7 @@ function processImport(slot,data){
         else{
             if(!fileValidity.isNotTimeTraveller) errorMsg += " - File was exported from a future version of PSM, please update\n";
             if(!fileValidity.isCorrectGame) errorMsg += " - File appears to be for a different Papa's series game\n";
+            if(!fileValidity.isSupportedHost) errorMsg += " - Save data is for a different host\n"
         }
         errorMsg += "\nFurther information and help may be found on GitHub";
         alert(errorMsg);
@@ -608,11 +613,11 @@ function initialise(){
     window.addEventListener("message", receiveMessage, false);
 
     if(psm.gameHost.makeIframe){
-        let iframey = document.createElement("iframe");
-        iframey.id = psm.gameHost.makeIframe[0];
-        iframey.src = psm.gameHost.makeIframe[1];
-        iframey.className = "hiddeny";
-        document.body.appendChild(iframey);
+        let newIframe = document.createElement("iframe");
+        newIframe.id = psm.gameHost.makeIframe[0];
+        newIframe.src = psm.gameHost.makeIframe[1];
+        newIframe.className = "hiddeny";
+        document.body.appendChild(newIframe);
     }
 
     if(psm.userOptions.otherPageAdjustments) pageAdjustments();
