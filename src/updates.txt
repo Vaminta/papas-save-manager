@@ -1,5 +1,11 @@
 WORKING:
 
+- Added support for Papa's Wingeria
+- Added support for Papa's Hot Doggeria
+- Added new userOption: consoleOut
+
+VERSION 0.4.0:
+
 - Added support for crazygames.com
 
 VERSION 0.3.0:

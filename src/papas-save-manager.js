@@ -8,6 +8,8 @@
 // @match       https://www.coolmathgames.com/0-papas-pancakeria
 // @match       https://www.coolmathgames.com/0-papas-cupcakeria
 // @match       https://www.coolmathgames.com/0-papas-cheeseria
+// @match       https://www.coolmathgames.com/0-papas-wingeria
+// @match       https://www.coolmathgames.com/0-papas-hot-doggeria
 //
 // @match       https://www.crazygames.com/game/papa-s-burgeria
 // @match       https://www.crazygames.com/game/papas-bakeria
@@ -16,13 +18,16 @@
 // @match       https://www.crazygames.com/game/papas-pancakeria
 // @match       https://www.crazygames.com/game/papas-cupcakeria
 // @match       https://www.crazygames.com/game/papas-cheeseria
+// @match       https://www.crazygames.com/game/papas-wingeria
+// @match       https://www.crazygames.com/game/papas-hotdoggeria
 //
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
+// @match       https://games.crazygames.com/en_US/papas-hotdoggeria/index.html
 //
 // @match       https://files.crazygames.com/*
 // @grant       none
-// @version     0.4.0
+// @version     0.5.0
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
@@ -39,6 +44,7 @@ USER OPTIONS:
 saveTxtExt: (bool) export outputs the file with .txt extension rather than .psm - same contents
 forceImport: (bool) bypass validation checks (not recommended)
 otherPageAdjustments: (bool) allows script to change other parts of webpage to fix potential problems
+consoleOut: enables outputs to the console, useful for testing
 preventGameLoad: (bool) attempts to prevent game loading, useful for internal testing
 
  */
@@ -46,12 +52,13 @@ psm.userOptions = {
     saveTxtExt: false,
     forceImport: false,
     otherPageAdjustments: false,
+    consoleOut: true,
     preventGameLoad: false
 }
 
 // --------------
 
-psm.version = "0.4.0";
+psm.version = "0.5.0";
 psm.saveVersion = "002";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
@@ -214,11 +221,51 @@ psm.gameList = Object.freeze([
                 iframe: ["#psm-domain-iframe"]
             }
         ]
+    },
+    {
+        name:"Papa's Wingeria",
+        saveName: "papaswingeria_save",
+        saveIdentifier: "15",
+        hosts:[
+            {
+                hostname: "www.coolmathgames.com",
+                pathname: "/0-papas-wingeria",
+                lsKeys: ["//papaswingeria_1","//papaswingeria_2","//papaswingeria_3"]
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-wingeria",
+                lsKeys: ["files.crazygames.com//papaswingeria_1","files.crazygames.com//papaswingeria_2","files.crazygames.com//papaswingeria_3"],
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            }
+        ]
+    },
+    {
+        name:"Papa's Hot Doggeria",
+        saveName: "papashotdoggeria_save",
+        saveIdentifier: "16",
+        hosts:[
+            {
+                hostname: "www.coolmathgames.com",
+                pathname: "/0-papas-hot-doggeria",
+                lsKeys: ["//papashotdoggeria1","//papashotdoggeria2","//papashotdoggeria3"]
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-hotdoggeria",
+                lsKeys: ["//papashotdoggeria1","//papashotdoggeria2","//papashotdoggeria3"],
+                iframe: ["#game-iframe"]
+            }
+        ]
     }
 ]);
 //psm.iframeLocations = ["https://games.crazygames.com/en_US/papa-s-burgeria/index.html","https://games.crazygames.com/en_US/papas-bakeria/index.html","https://files.crazygames.com/"];
 psm._idCount = 0;
 psm.newID = () => {psm._idCount++; return psm._idCount};
+
+psm.cout = (message) => {if(psm.userOptions.consoleOut) console.log(message)};
+
 psm.lsCallbacks = [];
 // [id,callback,date]
 psm.game = null;
@@ -432,7 +479,7 @@ function generateHTML(){
 function getSlot(slot,callback){
     if(!callback) return;
     const lsKey = String(psm.gameHost.lsKeys[slot]);
-    if(psm.gameHost.iframe.length>0){
+    if(psm.gameHost.iframe && psm.gameHost.iframe.length>0){
         const entID = psm.newID();
         let callbackEntry = [];
         callbackEntry[0] = entID;
@@ -457,7 +504,7 @@ function getSlot(slot,callback){
 function setSlot(slot,value,callback){ //callback not supported yet
     if(!value)return;
     const lsKey = String(psm.gameHost.lsKeys[slot]);
-    if(psm.gameHost.iframe.length>0){
+    if(psm.gameHost.iframe && psm.gameHost.iframe.length>0){
         let newMessage = {
             id: 0,  //N/A
             task: "setLS",
@@ -489,7 +536,7 @@ function iframeReceiveMessage(event){
     data.params
     */
     let data = event.data;
-    //console.log(window.location.host+" received "+data);
+    psm.cout(window.location.host+" received "+data);
     if(!data) return;
 
     //Nest experimentation
@@ -603,10 +650,11 @@ function isIframeLocation(){
 }
 
 function initialise(){
+    psm.cout("PSM Initialise");
     detectGame();
     if(!psm.game){ // if iframe script
         window.addEventListener("message", iframeReceiveMessage, false);
-        console.log("PSM iframe script loaded at: "+window.location.href);
+        psm.cout("PSM iframe script loaded at: "+window.location.href);
         return;
     }
     window.addEventListener("message", receiveMessage, false);
