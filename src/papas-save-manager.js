@@ -10,6 +10,7 @@
 // @match       https://www.coolmathgames.com/0-papas-cheeseria
 // @match       https://www.coolmathgames.com/0-papas-wingeria
 // @match       https://www.coolmathgames.com/0-papas-hot-doggeria
+// @match       https://www.coolmathgames.com/0-papas-pastaria
 //
 // @match       https://www.crazygames.com/game/papa-s-burgeria
 // @match       https://www.crazygames.com/game/papas-bakeria
@@ -20,6 +21,7 @@
 // @match       https://www.crazygames.com/game/papas-cheeseria
 // @match       https://www.crazygames.com/game/papas-wingeria
 // @match       https://www.crazygames.com/game/papas-hotdoggeria
+// @match       https://www.crazygames.com/game/papas-pastaria
 //
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
@@ -27,7 +29,7 @@
 //
 // @match       https://files.crazygames.com/*
 // @grant       none
-// @version     0.5.0
+// @version     0.6.0
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
@@ -58,7 +60,7 @@ psm.userOptions = {
 
 // --------------
 
-psm.version = "0.5.0";
+psm.version = "0.6.0";
 psm.saveVersion = "002";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
@@ -256,6 +258,25 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papas-hotdoggeria",
                 lsKeys: ["//papashotdoggeria1","//papashotdoggeria2","//papashotdoggeria3"],
                 iframe: ["#game-iframe"]
+            }
+        ]
+    },
+    {
+        name:"Papa's Pastaria",
+        saveName: "papaspastaria_save",
+        saveIdentifier: "17",
+        hosts:[
+            {
+                hostname: "www.coolmathgames.com",
+                pathname: "/0-papas-pastaria",
+                lsKeys: ["//papaspastaria1","//papaspastaria2","//papaspastaria3"]
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-pastaria",
+                lsKeys: ["files.crazygames.com//papaspastaria1","files.crazygames.com//papaspastaria2","files.crazygames.com//papaspastaria3"],
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     }

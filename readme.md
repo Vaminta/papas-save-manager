@@ -16,6 +16,7 @@ The number of supported games is expected to increase with each new version.
 - Papa's Cheeseria ( [Coolmath Games](https://www.coolmathgames.com/0-papas-cheeseria) | [CrazyGames](https://www.crazygames.com/game/papas-cheeseria) )
 - Papa's Wingeria ( [Coolmath Games](https://www.coolmathgames.com/0-papas-wingeria) | [CrazyGames](https://www.crazygames.com/game/papas-wingeria) )
 - Papa's Hot Doggeria ( [Coolmath Games](https://www.coolmathgames.com/0-papas-hot-doggeria) | [CrazyGames](https://www.crazygames.com/game/papas-hotdoggeria) )
+- Papa's Pastaria ( [Coolmath Games](https://www.coolmathgames.com/0-papas-pastaria) | [CrazyGames](https://www.crazygames.com/game/papas-pastaria) )
 
 ## Features
 - Export save data to file

@@ -1,5 +1,9 @@
 WORKING:
 
+- Added support for Papa's Pastaria
+
+VERSION 0.5.0
+
 - Added support for Papa's Wingeria
 - Added support for Papa's Hot Doggeria
 - Added new userOption: consoleOut
