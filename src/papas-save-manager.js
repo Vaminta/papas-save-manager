@@ -11,6 +11,7 @@
 // @match       https://www.coolmathgames.com/0-papas-wingeria
 // @match       https://www.coolmathgames.com/0-papas-hot-doggeria
 // @match       https://www.coolmathgames.com/0-papas-pastaria
+// @match       https://www.coolmathgames.com/0-papas-sushiria
 //
 // @match       https://www.crazygames.com/game/papa-s-burgeria
 // @match       https://www.crazygames.com/game/papas-bakeria
@@ -22,6 +23,7 @@
 // @match       https://www.crazygames.com/game/papas-wingeria
 // @match       https://www.crazygames.com/game/papas-hotdoggeria
 // @match       https://www.crazygames.com/game/papas-pastaria
+// @match       https://www.crazygames.com/game/papas-sushiria
 //
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
@@ -275,6 +277,25 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-pastaria",
                 lsKeys: ["files.crazygames.com//papaspastaria1","files.crazygames.com//papaspastaria2","files.crazygames.com//papaspastaria3"],
+                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            }
+        ]
+    },
+    {
+        name:"Papa's Sushiria",
+        saveName: "papassushiria_save",
+        saveIdentifier: "18",
+        hosts:[
+            {
+                hostname: "www.coolmathgames.com",
+                pathname: "/0-papas-sushiria",
+                lsKeys: ["//papassushiria1","//papassushiria2","//papassushiria3"]
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-sushiria",
+                lsKeys: ["files.crazygames.com//papassushiria1","files.crazygames.com//papassushiria2","files.crazygames.com//papassushiria3"],
                 makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
