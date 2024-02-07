@@ -90,8 +90,7 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-bakeria",
-                lsKeys: ["//papasbakeria1","//papasbakeria2","//papasbakeria3"],
-                iframe: []
+                lsKeys: ["//papasbakeria1","//papasbakeria2","//papasbakeria3"]
             },
             {
                 hostname: "www.crazygames.com",
@@ -111,8 +110,7 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-freezeria",
-                lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
-                iframe: []
+                lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"]
             },
             {
                 hostname: "www.crazygames.com",
@@ -131,8 +129,7 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-burgeria",
-                lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
-                iframe: []
+                lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"]
             },
             {
                 hostname: "www.crazygames.com",
@@ -151,8 +148,7 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-taco-mia",
-                lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"],
-                iframe: []
+                lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"]
             },
             {
                 hostname: "www.crazygames.com",
@@ -172,8 +168,7 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-pancakeria",
-                lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"],
-                iframe: []
+                lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"]
             },
             {
                 hostname: "www.crazygames.com",
@@ -193,8 +188,7 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-cupcakeria",
-                lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"],
-                iframe: []
+                lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"]
             },
             {
                 hostname: "www.crazygames.com",
@@ -214,8 +208,7 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.coolmathgames.com",
                 pathname: "/0-papas-cheeseria",
-                lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"],
-                iframe: []
+                lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"]
             },
             {
                 hostname: "www.crazygames.com",
@@ -419,7 +412,6 @@ function processImport(slot,data){
     if(fileValidity.conclusion || forceLoad){ //continue to load
         const importData = data.slice(11);
         setSlot(slot,importData);
-        //localStorage.setItem(key,importData);
     }
     else{ // do not load -> show error
         let errorMsg = "PSM Import Error: \n\n";
@@ -508,8 +500,9 @@ function generateHTML(){
 
     const hostname = psm.gameHost.hostname;
     if(hostname=="www.coolmathgames.com"){
-        let parentNode = document.getElementsByClassName("game-meta-body")[0];
-        document.getElementsByClassName("node__content clearfix field-item")[0].insertBefore(div,parentNode);
+        let parentNode = document.getElementsByClassName("node__content clearfix field-item")[1];
+        let childNode = document.getElementsByClassName("game-meta-body")[0];
+        parentNode.insertBefore(div,childNode);
     }
     else if(hostname=="www.crazygames.com"){
         let beforeNode = document.getElementsByClassName("css-1pj32m1")[0];
@@ -534,7 +527,6 @@ function getSlot(slot,callback){
         };
         if(psm.gameHost.nest) newMessage.nest = psm.gameHost.nest;
         else newMessage.nest = 0;
-        //console.log(newMessage);
         document.querySelector(psm.gameHost.iframe[0]).contentWindow.postMessage(newMessage,"*");
     }
     else{

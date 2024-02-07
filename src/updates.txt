@@ -2,6 +2,7 @@ WORKING:
 
 - Added support for Papa's Pastaria
 - Added support for Papa's Sushiria
+- Fixed HTML injection issue with Coolmath Games
 
 VERSION 0.5.0
 
