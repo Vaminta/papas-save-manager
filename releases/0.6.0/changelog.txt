@@ -1,0 +1,4 @@
+Changelog 0.5.0 -> 0.6.0:
+- Added support for Papa's Pastaria
+- Added support for Papa's Sushiria
+- Fixed HTML injection issue with Coolmath Games
