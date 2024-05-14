@@ -25,13 +25,17 @@
 // @match       https://www.crazygames.com/game/papas-pastaria
 // @match       https://www.crazygames.com/game/papas-sushiria
 //
+// @match       https://papas-bakeria.game-files.crazygames.com/
+// @match       https://papas-freezeria.game-files.crazygames.com/
+// @match       https://papa-s-burgeria.game-files.crazygames.com/
+//
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-hotdoggeria/index.html
 //
 // @match       https://files.crazygames.com/*
 // @grant       none
-// @version     0.6.0
+// @version     0.6.1
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
@@ -54,7 +58,7 @@ preventGameLoad: (bool) attempts to prevent game loading, useful for internal te
  */
 psm.userOptions = {
     saveTxtExt: false,
-    forceImport: false,
+    forceImport: true,
     otherPageAdjustments: false,
     consoleOut: false,
     preventGameLoad: false
@@ -62,8 +66,8 @@ psm.userOptions = {
 
 // --------------
 
-psm.version = "0.6.0";
-psm.saveVersion = "002";
+psm.version = "0.7.0";
+psm.saveVersion = "003";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
 psm.hostList = [
@@ -96,7 +100,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-bakeria",
                 lsKeys: ["files.crazygames.com//papasbakeria1","files.crazygames.com//papasbakeria2","files.crazygames.com//papasbakeria3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-bakeria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -115,8 +119,9 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-freezeria",
-                lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
-                iframe: ["#game-iframe"]
+                lsKeys: ["files.crazygames.com//papasfreezeria_1","files.crazygames.com//papasfreezeria_2","files.crazygames.com//papasfreezeria_3"],
+                makeIframe: ["psm-domain-iframe","https://papas-freezeria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -134,8 +139,9 @@ psm.gameList = Object.freeze([
             {
                 hostname: "www.crazygames.com",
                 pathname: "/game/papa-s-burgeria",
-                lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
-                iframe: ["#game-iframe"]
+                lsKeys: ["files.crazygames.com//papasburgeria_1","files.crazygames.com//papasburgeria_2","files.crazygames.com//papasburgeria_3"],
+                makeIframe: ["psm-domain-iframe","https://papa-s-burgeria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
