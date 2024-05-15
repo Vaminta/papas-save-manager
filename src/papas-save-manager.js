@@ -28,6 +28,13 @@
 // @match       https://papas-bakeria.game-files.crazygames.com/
 // @match       https://papas-freezeria.game-files.crazygames.com/
 // @match       https://papa-s-burgeria.game-files.crazygames.com/
+// @match       https://papas-taco-mia.game-files.crazygames.com/
+// @match       https://papas-pancakeria.game-files.crazygames.com/
+// @match       https://papas-cupcakeria.game-files.crazygames.com/
+// @match       https://papas-cheeseria.game-files.crazygames.com/
+// @match       https://papas-wingeria.game-files.crazygames.com/
+// @match       https://papas-pastaria.game-files.crazygames.com/
+// @match       https://papas-sushiria.game-files.crazygames.com/
 //
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
@@ -58,7 +65,7 @@ preventGameLoad: (bool) attempts to prevent game loading, useful for internal te
  */
 psm.userOptions = {
     saveTxtExt: false,
-    forceImport: true,
+    forceImport: false,
     otherPageAdjustments: false,
     consoleOut: false,
     preventGameLoad: false
@@ -66,7 +73,7 @@ psm.userOptions = {
 
 // --------------
 
-psm.version = "0.7.0";
+psm.version = "0.6.1";
 psm.saveVersion = "003";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
@@ -160,7 +167,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-taco-mia",
                 lsKeys: ["files.crazygames.com//papastaqueria_1","files.crazygames.com//papastaqueria_2","files.crazygames.com//papastaqueria_3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-taco-mia.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -180,7 +187,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-pancakeria",
                 lsKeys: ["files.crazygames.com//papaspancakeria_1","files.crazygames.com//papaspancakeria_2","files.crazygames.com//papaspancakeria_3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-pancakeria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -200,7 +207,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-cupcakeria",
                 lsKeys: ["files.crazygames.com//papascupcakeria1","files.crazygames.com//papascupcakeria2","files.crazygames.com//papascupcakeria3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-cupcakeria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -220,7 +227,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-cheeseria",
                 lsKeys: ["files.crazygames.com//papascheeseria1","files.crazygames.com//papascheeseria2","files.crazygames.com//papascheeseria3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-cheeseria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -239,7 +246,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-wingeria",
                 lsKeys: ["files.crazygames.com//papaswingeria_1","files.crazygames.com//papaswingeria_2","files.crazygames.com//papaswingeria_3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-wingeria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -276,7 +283,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-pastaria",
                 lsKeys: ["files.crazygames.com//papaspastaria1","files.crazygames.com//papaspastaria2","files.crazygames.com//papaspastaria3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-pastaria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -295,7 +302,7 @@ psm.gameList = Object.freeze([
                 hostname: "www.crazygames.com",
                 pathname: "/game/papas-sushiria",
                 lsKeys: ["files.crazygames.com//papassushiria1","files.crazygames.com//papassushiria2","files.crazygames.com//papassushiria3"],
-                makeIframe: ["psm-domain-iframe","https://files.crazygames.com/"],
+                makeIframe: ["psm-domain-iframe","https://papas-sushiria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
