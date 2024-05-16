@@ -12,6 +12,8 @@
 // @match       https://www.coolmathgames.com/0-papas-hot-doggeria
 // @match       https://www.coolmathgames.com/0-papas-pastaria
 // @match       https://www.coolmathgames.com/0-papas-sushiria
+// @match       https://www.coolmathgames.com/0-papas-donuteria
+// @match       https://www.coolmathgames.com/0-papas-scooperia
 //
 // @match       https://www.crazygames.com/game/papa-s-burgeria
 // @match       https://www.crazygames.com/game/papas-bakeria
@@ -24,6 +26,8 @@
 // @match       https://www.crazygames.com/game/papas-hotdoggeria
 // @match       https://www.crazygames.com/game/papas-pastaria
 // @match       https://www.crazygames.com/game/papas-sushiria
+// @match       https://www.crazygames.com/game/papas-donuteria
+// @match       https://www.crazygames.com/game/papa-s-scooperia
 //
 // @match       https://papas-bakeria.game-files.crazygames.com/
 // @match       https://papas-freezeria.game-files.crazygames.com/
@@ -35,6 +39,8 @@
 // @match       https://papas-wingeria.game-files.crazygames.com/
 // @match       https://papas-pastaria.game-files.crazygames.com/
 // @match       https://papas-sushiria.game-files.crazygames.com/
+// @match       https://papas-donuteria.game-files.crazygames.com/
+// @match       https://papa-s-scooperia.game-files.crazygames.com/
 //
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
@@ -42,7 +48,7 @@
 //
 // @match       https://files.crazygames.com/*
 // @grant       none
-// @version     0.6.1
+// @version     0.7.0
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
@@ -73,7 +79,7 @@ psm.userOptions = {
 
 // --------------
 
-psm.version = "0.6.1";
+psm.version = "0.7.0";
 psm.saveVersion = "003";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
@@ -306,6 +312,44 @@ psm.gameList = Object.freeze([
                 iframe: ["#psm-domain-iframe"]
             }
         ]
+    },
+    {
+        name:"Papa's Donuteria",
+        saveName: "papasdonuteria_save",
+        saveIdentifier: "19",
+        hosts:[
+            {
+                hostname: "www.coolmathgames.com",
+                pathname: "/0-papas-donuteria",
+                lsKeys: ["//papasdonuteria1","//papasdonuteria2","//papasdonuteria3"]
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papas-donuteria",
+                lsKeys: ["files.crazygames.com//papasdonuteria1","files.crazygames.com//papasdonuteria2","files.crazygames.com//papasdonuteria3"],
+                makeIframe: ["psm-domain-iframe","https://papas-donuteria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            }
+        ]
+    },
+    {
+        name:"Papa's Scooperia",
+        saveName: "papasscooperia_save",
+        saveIdentifier: "20",
+        hosts:[
+            {
+                hostname: "www.coolmathgames.com",
+                pathname: "/0-papas-scooperia",
+                lsKeys: ["//papasscooperiahd1","//papasscooperiahd2","//papasscooperiahd3"]
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/papa-s-scooperia",
+                lsKeys: ["files.crazygames.com//papasscooperiahd1","files.crazygames.com//papasscooperiahd2","files.crazygames.com//papasscooperiahd3"],
+                makeIframe: ["psm-domain-iframe","https://papa-s-scooperia.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            }
+        ]
     }
 ]);
 
@@ -508,7 +552,7 @@ function generateHTML(){
 
     let footerP = document.createElement("p");
     footerP.style = "font-size:10px; margin: 2% 0% 0% 0%;";
-    footerP.innerHTML = "Version: " + psm.version + " ・ Running game: " + psm.game.name + " ・ Software provided without warranty ・ More info on <a href='https://github.com/Vaminta/papas-bakeria-save-manager' target='_blank' >GitHub</a>"
+    footerP.innerHTML = "Version: " + psm.version + " ・ Running game: " + psm.game.name + " ・ Software provided without warranty ・ More info on <a href='https://github.com/Vaminta/papas-save-manager' target='_blank' >GitHub</a>"
     div.appendChild(footerP);
 
     const hostname = psm.gameHost.hostname;
