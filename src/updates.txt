@@ -3,6 +3,7 @@ WORKING:
 - Fixed crazygames integration for Bakeria, Freezeria, Burgeria, Taco Mia, Pancakeria, Cupcakeria, Cheeseria, Wingeria, Hot Doggeria, Pastaria and Sushiria
 - Added support for Papa's Donuteria
 - Added support for Papa's Scooperia
+- Updated GitHub link
 
 VERSION 0.6.0:
 
