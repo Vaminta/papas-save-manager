@@ -35,10 +35,10 @@ The script must be installed into a userscript manager such as Violentmonkey or 
 
 ### Why don't my crazygames.com saves appear after importing? (2024)
 
-CrazyGames has recently updated their backend design and changed the flash emulator from AwayFL to Ruffle. If after reloading the page your saves still don't appear, try the following steps below. You can try importing your save to the equivalent Coolmath Games page since that still uses the AwayFL emulator.
+CrazyGames has recently updated their backend design and changed the flash emulator from AwayFL to Ruffle. If after reloading the page your saves still don't appear, try the following steps below. You can try importing your save file to the equivalent Coolmath Games page since that still uses the AwayFL emulator.
 1. Open Papa's Save Manager in your extension's code editor.
 2. Scroll down until you see "User Options" (approximately line 74).
-3. Change the forceImport option from "false" to "true".
+3. Change the forceImport option from "false" to "true" and save the changes.
 4. Navigate to the corresponding page on Coolmath Games.
 5. Import your save data as usual.
 
