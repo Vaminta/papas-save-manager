@@ -33,6 +33,12 @@ The script must be installed into a userscript manager such as Violentmonkey or 
 
 ## Troubleshooting
 
+### Why doesn't the save manager appear? 
+
+If you are using a Chrome based browser (including Edge), user script managers must have developer mode enabled on the browser's extension page. Instructions on how to do this can be found on [Tampermonkey's FAQ](https://www.tampermonkey.net/faq.php#Q209) - the same should work for other user script managers.
+
+If the above does not apply and the save manager does still not appear then an update may have been to pushed to the game's website which prevents the save manager from displaying. An update will be required, so if you suspect this to be the case please open an issue on GitHub so that I can be notified.
+
 ### Why don't my crazygames.com saves appear after importing? (2024)
 
 CrazyGames has recently updated their backend design and changed the flash emulator from AwayFL to Ruffle. If after reloading the page your saves still don't appear, try the following steps below. You can try importing your save file to the equivalent Coolmath Games page since that still uses the AwayFL emulator.
