@@ -1,5 +1,11 @@
 WORKING:
 
+VERSION 0.7.1:
+
+- Fixed injection issue with CrazyGames
+
+VERSION 0.7.0:
+
 - Fixed crazygames integration for Bakeria, Freezeria, Burgeria, Taco Mia, Pancakeria, Cupcakeria, Cheeseria, Wingeria, Hot Doggeria, Pastaria and Sushiria
 - Added support for Papa's Donuteria
 - Added support for Papa's Scooperia
