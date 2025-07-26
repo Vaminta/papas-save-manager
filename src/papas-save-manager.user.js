@@ -53,6 +53,8 @@
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
 // @homepageURL https://github.com/Vaminta/papas-save-manager
+// @downloadURL https://update.greasyfork.org/scripts/474235/Papa%27s%20Save%20Manager.user.js
+// @updateURL https://update.greasyfork.org/scripts/474235/Papa%27s%20Save%20Manager.meta.js
 // ==/UserScript==
 
 //04/09/2023
@@ -366,6 +368,10 @@ psm.gameHost = null;
 psm.hostDetails = null;
 
 const pbsmCSS = `
+#pbsm-cont{
+    
+}
+
 .pbsm-imp-button, .pbsm-exp-button{
     background-color: #1d3752;
     color: #ffffff;
@@ -539,7 +545,7 @@ function addOnclicks(){
 
 function generateHTML(){
     let div = document.createElement("div");
-    div.id = "pbsm-cont"; //papas save manager container
+    div.id = "psm-cont"; //papas save manager container
     div.className = "game-meta-body";
     if(window.location.host=="www.crazygames.com") div.className += " crazygamesCont";
     div.style = "padding-bottom: 1%;";
@@ -559,14 +565,21 @@ function generateHTML(){
     div.appendChild(footerP);
 
     const hostname = psm.gameHost.hostname;
-    if(hostname=="www.coolmathgames.com"){
-        let parentNode = document.getElementsByClassName("node__content clearfix field-item")[1];
-        let childNode = document.getElementsByClassName("game-meta-body")[0];
-        parentNode.insertBefore(div,childNode);
+    try{
+      if(hostname=="www.coolmathgames.com"){
+          let parentNode = document.getElementsByClassName("node__content clearfix field-item")[1];
+          let childNode = document.getElementsByClassName("game-meta-body")[0];
+          parentNode.insertBefore(div,childNode);
+      }
+      else if(hostname=="www.crazygames.com"){
+          let beforeNode = document.getElementsByClassName("delGamePageDesktop_leaderboardContainer__NClZo")[0];
+          let parentNode = document.getElementById("delgamePageMainContainer");
+          parentNode.insertBefore(div,beforeNode);
+      }
     }
-    else if(hostname=="www.crazygames.com"){
-        let beforeNode = document.getElementsByClassName("GamePageDesktop_leaderboardContainer__NClZo")[0];
-        document.getElementById("gamePageMainContainer").insertBefore(div,beforeNode);
+    catch(error){
+      alert(error);
+      document.body.appendChild(div);
     }
     addOnclicks();
 }
@@ -647,6 +660,7 @@ function iframeReceiveMessage(event){
     let response = {
         id: data.id,
         type: "lsReply",
+        status: "unknown",
         content: null
     };
     if(data.task=="getLS"){
