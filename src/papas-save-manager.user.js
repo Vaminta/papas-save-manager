@@ -48,7 +48,7 @@
 //
 // @match       https://files.crazygames.com/*
 // @grant       none
-// @version     0.7.1
+// @version     0.7.2
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
@@ -76,13 +76,13 @@ psm.userOptions = {
     saveTxtExt: false,
     forceImport: false,
     otherPageAdjustments: false,
-    consoleOut: false,
+    consoleOut: true,
     preventGameLoad: false
 }
 
 // --------------
 
-psm.version = "0.7.1";
+psm.version = "0.7.2";
 psm.saveVersion = "003";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
@@ -359,7 +359,7 @@ psm.gameList = Object.freeze([
 psm._idCount = 0;
 psm.newID = () => {psm._idCount++; return psm._idCount};
 
-psm.cout = (message) => {if(psm.userOptions.consoleOut) console.log(message)};
+psm.cout = (message,type) => {if(psm.userOptions.consoleOut) console.log(message)};
 
 psm.lsCallbacks = [];
 // [id,callback,date]
@@ -368,11 +368,11 @@ psm.gameHost = null;
 psm.hostDetails = null;
 
 const pbsmCSS = `
-#pbsm-cont{
-    
+#psm-cont{
+    padding-bottom: 1%;
 }
 
-.pbsm-imp-button, .pbsm-exp-button{
+.psm-imp-button, .psm-exp-button{
     background-color: #1d3752;
     color: #ffffff;
     border: 1px #06203b solid;
@@ -381,7 +381,7 @@ const pbsmCSS = `
     height: 30px;
 }
 
-.pbsm-imp-button:hover, .pbsm-exp-button:hover{
+.psm-imp-button:hover, .psm-exp-button:hover{
     background-color: #2d4762;
 }
 
@@ -395,6 +395,11 @@ const pbsmCSS = `
 
 .hidden {
     display:none;
+}
+
+.psm-failed-to-inject {
+    max-width: 60%;
+    left: 20%;
 }
 `;
 
@@ -522,8 +527,8 @@ function handleButtonClick(e,func){
 }
 
 function genTableHTML(){
-    const impButtHTML = '<button class="pbsm-imp-button">Import</button>';
-    const expButtHTML = '<button class="pbsm-exp-button">Export</button>';
+    const impButtHTML = '<button class="psm-imp-button">Import</button>';
+    const expButtHTML = '<button class="psm-exp-button">Export</button>';
     let table = "<table>";
     table += "<tr><th>Slot 1</th><th>Slot 2</th><th>Slot 3</th></tr>";
     table += "<tr><td data-ss='1' >" + impButtHTML + "</td><td data-ss='2' >"+ impButtHTML + "</td><td data-ss='3' >"+impButtHTML+"</td></tr>"; //data-saveslot
@@ -533,8 +538,8 @@ function genTableHTML(){
 }
 
 function addOnclicks(){
-    let importButtons = document.getElementsByClassName("pbsm-imp-button");
-    let exportButtons = document.getElementsByClassName("pbsm-exp-button");
+    let importButtons = document.getElementsByClassName("psm-imp-button");
+    let exportButtons = document.getElementsByClassName("psm-exp-button");
     for(let i=0;i<importButtons.length;i++){
         importButtons[i].onclick = function(){handleButtonClick(this,"import")};
     }
@@ -548,7 +553,6 @@ function generateHTML(){
     div.id = "psm-cont"; //papas save manager container
     div.className = "game-meta-body";
     if(window.location.host=="www.crazygames.com") div.className += " crazygamesCont";
-    div.style = "padding-bottom: 1%;";
     let genHTML = "<h2>Save Manager</h2><p>This save manager allows you to import and export saves to ensure they are never lost. Saves can also be moved between devices. The page may need to be refreshed before imported saves are visible.</p>";
     genHTML += genTableHTML();
     div.innerHTML = genHTML;
@@ -572,16 +576,34 @@ function generateHTML(){
           parentNode.insertBefore(div,childNode);
       }
       else if(hostname=="www.crazygames.com"){
-          let beforeNode = document.getElementsByClassName("delGamePageDesktop_leaderboardContainer__NClZo")[0];
-          let parentNode = document.getElementById("delgamePageMainContainer");
-          parentNode.insertBefore(div,beforeNode);
+          let childNode = document.getElementsByClassName("GamePageDesktop_underGameContainerGrid__cdhNC")[0];
+          let parentNode = document.getElementById("gamePageMainContainer");
+          parentNode.insertBefore(div,childNode);
       }
     }
     catch(error){
-      alert(error);
+      div.className += " psm-failed-to-inject";
+      psm.cout("Error injecting HTML - " + error);
       document.body.appendChild(div);
     }
     addOnclicks();
+}
+
+/*
+ * Checks psm.lsCallbacks to see if any haven't been solved (removed)
+ * better to call after a timeout
+ */
+function callbackCheck(){
+    for(let i=0;i<psm.lsCallbacks.length;i++){
+        let thatTime = new Date(psm.lsCallbacks[i][2]);
+        let currentTime = new Date();
+        const allowedDifference = 1800; //1.8 seconds
+        if(currentTime-thatTime > allowedDifference){
+            psm.cout("Error Code: lscTIMEOUT","error");
+            let choice = confirm("Error: PSM was not able to access game data.\n\nError Code: lscTIMEOUT"); //local storage callback
+            psm.lsCallbacks.splice(i,1); //no choice
+        }
+    }
 }
 
 function getSlot(slot,callback){
@@ -592,6 +614,7 @@ function getSlot(slot,callback){
         let callbackEntry = [];
         callbackEntry[0] = entID;
         callbackEntry[1] = callback;
+        callbackEntry[2] = new Date().toISOString();
         psm.lsCallbacks.push(callbackEntry);
         let newMessage = {
             id: entID,
@@ -601,6 +624,7 @@ function getSlot(slot,callback){
         if(psm.gameHost.nest) newMessage.nest = psm.gameHost.nest;
         else newMessage.nest = 0;
         document.querySelector(psm.gameHost.iframe[0]).contentWindow.postMessage(newMessage,"*");
+        setTimeout(callbackCheck, 2000);
     }
     else{
         let data = localStorage.getItem(lsKey);
@@ -628,10 +652,12 @@ function setSlot(slot,value,callback){ //callback not supported yet
 function receiveMessage(event){
     const data = event.data;
     if(data.type=="lsReply"){
-        for(let i=0;i<psm.lsCallbacks.length;i++){
+        let i;
+        for(i=0;i<psm.lsCallbacks.length;i++){
             let entry = psm.lsCallbacks[i];
             if(entry[0]==data.id) entry[1](data.content); //callback()
         }
+        psm.lsCallbacks.splice(--i,1); //delete from callback list --i because of increment from for loop
     }
 }
 

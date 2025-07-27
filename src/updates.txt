@@ -1,5 +1,10 @@
 WORKING:
 
+- Fixed CrazyGames injection hook.
+- Improved robustness of HTML injection handling. Now injects into body if specific element not found.
+- Callback check: 2 second timeout for if nothing is returned from iframe.
+- Misc adjustments. e.g. id names
+
 VERSION 0.7.1:
 
 - Fixed injection issue with CrazyGames
