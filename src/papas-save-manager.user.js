@@ -48,7 +48,7 @@
 //
 // @match       https://files.crazygames.com/*
 // @grant       none
-// @version     0.7.2
+// @version     0.8.0
 // @author      Vaminta
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
@@ -67,22 +67,18 @@ USER OPTIONS:
 
 saveTxtExt: (bool) export outputs the file with .txt extension rather than .psm - same contents
 forceImport: (bool) bypass validation checks (not recommended)
-otherPageAdjustments: (bool) allows script to change other parts of webpage to fix potential problems
 consoleOut: enables outputs to the console, useful for testing
-preventGameLoad: (bool) attempts to prevent game loading, useful for internal testing
 
  */
 psm.userOptions = {
     saveTxtExt: false,
     forceImport: false,
-    otherPageAdjustments: false,
-    consoleOut: true,
-    preventGameLoad: false
+    consoleOut: false
 }
 
 // --------------
 
-psm.version = "0.7.2";
+psm.version = "0.8.0";
 psm.saveVersion = "003";
 psm.savePrefix = "PSMS"; //PSM save
 psm.saveExt = "psm";
@@ -409,22 +405,13 @@ function injectCSS(css){
     document.head.appendChild(styleE);
 }
 
-//not working as of 0.4.0 (not async compat)
-function slotHasSave(slot){
-    return false;
-    let result = false;
-    const data = localStorage.getItem(psm.game.lsKeys[slot]);
-    if(data!=null&&data.length>20) result = true;
-    return result;
-}
-
 //Generic download function
 function download(filename, text) {
-    let element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
+    let element = document.createElement("a");
+    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+    element.setAttribute("download", filename);
 
-    element.style.display = 'none';
+    element.style.display = "none";
     document.body.appendChild(element);
 
     element.click();
@@ -756,20 +743,6 @@ function detectGame(){
     if(psm.gameHost) psm.hostDetails = getHostDetails("hostname",psm.gameHost.hostname);
 }
 
-//attempt to prevent the game from loading
-function blockGame(){
-    if(window.location.hostname=="www.coolmathgames.com"){
-        let wrapper = document.getElementById("swfgamewrapper");
-        wrapper.innerHTML = "";
-    }
-}
-
-function pageAdjustments(){
-    if(window.location.hostname=="www.coolmathgames.com"){
-        document.getElementById("game-fullscreen").onclick = () => cmg_start_game_full_screen();
-    }
-}
-
 function initialise(){
     psm.cout("PSM Initialise");
     detectGame();
@@ -788,9 +761,7 @@ function initialise(){
         document.body.appendChild(newIframe);
     }
 
-    if(psm.userOptions.otherPageAdjustments) pageAdjustments();
     if(psm.userOptions.saveTxtExt) psm.saveExt = "txt";
-    if(psm.userOptions.preventGameLoad) blockGame();
     injectCSS(pbsmCSS);
     if(window.location.host=="www.crazygames.com"){
         var interval = setInterval(function(){ //for crazygames doesn't like adding html too early!

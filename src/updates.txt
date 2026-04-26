@@ -4,6 +4,7 @@ WORKING:
 - Improved robustness of HTML injection handling. Now injects into body if specific element not found.
 - Callback check: 2 second timeout for if nothing is returned from iframe.
 - Misc adjustments. e.g. id names
+- Removed user options: otherPageAdjustments and preventGameLoad.
 
 VERSION 0.7.1:
 
