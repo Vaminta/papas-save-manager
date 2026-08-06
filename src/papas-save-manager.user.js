@@ -14,6 +14,28 @@
 // @match       https://www.coolmathgames.com/0-papas-sushiria
 // @match       https://www.coolmathgames.com/0-papas-donuteria
 // @match       https://www.coolmathgames.com/0-papas-scooperia
+// @match       https://www.coolmathgames.com/0-jacksmith
+//
+// @match       https://poki.com/*/g/papas-scooperia
+// @match       https://6fab0d00-7fea-436e-925a-2ff81f87692f.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-bakeria
+// @match       https://116c3853-042e-40da-bb48-a1ebd47b3811.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-freezeria
+// @match       https://f34a9475-1f14-432c-9457-d41097efb88f.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-burgeria
+// @match       https://eef773ae-c2b1-45d3-8aeb-ec0145ab81dc.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-taco-mia
+// @match       https://ccb6ad3c-1888-4c24-bdd6-985672179a60.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-pancakeria
+// @match       https://b1d28727-5791-4b62-bfa2-022a2f25b52d.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-cupcakeria
+// @match       https://5dd05251-88a8-44b4-8071-9af6b7fb2a7a.gdn.poki.com/
+// @match       https://poki.com/en/g/papas-cheeseria
+// @match       https://acb24546-6baa-476c-8948-9389513bd185.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-wingeria
+// @match       https://f8bfb5ec-173d-422d-bc7c-d30fa534180c.gdn.poki.com/
+//
+//
 //
 // @match       https://www.crazygames.com/game/papa-s-burgeria
 // @match       https://www.crazygames.com/game/papas-bakeria
@@ -28,6 +50,7 @@
 // @match       https://www.crazygames.com/game/papas-sushiria
 // @match       https://www.crazygames.com/game/papas-donuteria
 // @match       https://www.crazygames.com/game/papa-s-scooperia
+// @match       https://www.crazygames.com/game/jacksmith
 //
 // @match       https://papas-bakeria.game-files.crazygames.com/
 // @match       https://papas-freezeria.game-files.crazygames.com/
@@ -41,6 +64,7 @@
 // @match       https://papas-sushiria.game-files.crazygames.com/
 // @match       https://papas-donuteria.game-files.crazygames.com/
 // @match       https://papa-s-scooperia.game-files.crazygames.com/
+// @match       https://jacksmith.game-files.crazygames.com/
 //
 // @match       https://games.crazygames.com/en_US/papa-s-burgeria/index.html
 // @match       https://games.crazygames.com/en_US/papas-freezeria/index.html
@@ -54,7 +78,7 @@
 // @description Allows you to backup your save data for the Papa's series of games online
 // @homepageURL https://github.com/Vaminta/papas-save-manager
 // @downloadURL https://update.greasyfork.org/scripts/474235/Papa%27s%20Save%20Manager.user.js
-// @updateURL https://update.greasyfork.org/scripts/474235/Papa%27s%20Save%20Manager.meta.js
+// @updateURL   https://update.greasyfork.org/scripts/474235/Papa%27s%20Save%20Manager.meta.js
 // ==/UserScript==
 
 //04/09/2023
@@ -73,7 +97,7 @@ consoleOut: enables outputs to the console, useful for testing
 psm.userOptions = {
     saveTxtExt: false,
     forceImport: false,
-    consoleOut: false
+    consoleOut: true
 }
 
 // --------------
@@ -95,6 +119,13 @@ psm.hostList = [
         saveIdentifier: "09",
         saveNameSignature: "cg"
     }
+    ,
+    {
+        name: "Poki",
+        hostname: "poki.com",
+        saveIdentifier: "10",
+        saveNameSignature: "poki"
+    }
 ];
 psm.gameList = Object.freeze([
     {
@@ -113,6 +144,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papas-bakeria",
                 lsKeys: ["files.crazygames.com//papasbakeria1","files.crazygames.com//papasbakeria2","files.crazygames.com//papasbakeria3"],
                 makeIframe: ["psm-domain-iframe","https://papas-bakeria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-bakeria",
+                lsKeys: ["//papasbakeria1","//papasbakeria2","//papasbakeria3"],
+                makeIframe: ["psm-domain-iframe","https://116c3853-042e-40da-bb48-a1ebd47b3811.gdn.poki.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -134,6 +172,13 @@ psm.gameList = Object.freeze([
                 lsKeys: ["files.crazygames.com//papasfreezeria_1","files.crazygames.com//papasfreezeria_2","files.crazygames.com//papasfreezeria_3"],
                 makeIframe: ["psm-domain-iframe","https://papas-freezeria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-freezeria",
+                lsKeys: ["//papasfreezeria_1","//papasfreezeria_2","//papasfreezeria_3"],
+                makeIframe: ["psm-domain-iframe","https://f34a9475-1f14-432c-9457-d41097efb88f.gdn.poki.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -153,6 +198,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papa-s-burgeria",
                 lsKeys: ["files.crazygames.com//papasburgeria_1","files.crazygames.com//papasburgeria_2","files.crazygames.com//papasburgeria_3"],
                 makeIframe: ["psm-domain-iframe","https://papa-s-burgeria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-burgeria",
+                lsKeys: ["//papasburgeria_1","//papasburgeria_2","//papasburgeria_3"],
+                makeIframe: ["psm-domain-iframe","https://eef773ae-c2b1-45d3-8aeb-ec0145ab81dc.gdn.poki.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -174,6 +226,13 @@ psm.gameList = Object.freeze([
                 lsKeys: ["files.crazygames.com//papastaqueria_1","files.crazygames.com//papastaqueria_2","files.crazygames.com//papastaqueria_3"],
                 makeIframe: ["psm-domain-iframe","https://papas-taco-mia.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-taco-mia",
+                lsKeys: ["//papastaqueria_1","//papastaqueria_2","//papastaqueria_3"],
+                makeIframe: ["psm-domain-iframe","https://ccb6ad3c-1888-4c24-bdd6-985672179a60.gdn.poki.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -193,6 +252,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papas-pancakeria",
                 lsKeys: ["files.crazygames.com//papaspancakeria_1","files.crazygames.com//papaspancakeria_2","files.crazygames.com//papaspancakeria_3"],
                 makeIframe: ["psm-domain-iframe","https://papas-pancakeria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-pancakeria",
+                lsKeys: ["//papaspancakeria_1","//papaspancakeria_2","//papaspancakeria_3"],
+                makeIframe: ["psm-domain-iframe","https://b1d28727-5791-4b62-bfa2-022a2f25b52d.gdn.poki.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -214,6 +280,13 @@ psm.gameList = Object.freeze([
                 lsKeys: ["files.crazygames.com//papascupcakeria1","files.crazygames.com//papascupcakeria2","files.crazygames.com//papascupcakeria3"],
                 makeIframe: ["psm-domain-iframe","https://papas-cupcakeria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-cupcakeria",
+                lsKeys: ["//papascupcakeria1","//papascupcakeria2","//papascupcakeria3"],
+                makeIframe: ["psm-domain-iframe","https://5dd05251-88a8-44b4-8071-9af6b7fb2a7a.gdn.poki.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -234,6 +307,13 @@ psm.gameList = Object.freeze([
                 lsKeys: ["files.crazygames.com//papascheeseria1","files.crazygames.com//papascheeseria2","files.crazygames.com//papascheeseria3"],
                 makeIframe: ["psm-domain-iframe","https://papas-cheeseria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-cheeseria",
+                lsKeys: ["//papascheeseria1","//papascheeseria2","//papascheeseria3"],
+                makeIframe: ["psm-domain-iframe","https://acb24546-6baa-476c-8948-9389513bd185.gdn.poki.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -252,6 +332,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papas-wingeria",
                 lsKeys: ["files.crazygames.com//papaswingeria_1","files.crazygames.com//papaswingeria_2","files.crazygames.com//papaswingeria_3"],
                 makeIframe: ["psm-domain-iframe","https://papas-wingeria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-wingeria",
+                lsKeys: ["//papaswingeria_1","//papaswingeria_2","//papaswingeria_3"],
+                makeIframe: ["psm-domain-iframe","https://f8bfb5ec-173d-422d-bc7c-d30fa534180c.gdn.poki.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -347,6 +434,32 @@ psm.gameList = Object.freeze([
                 lsKeys: ["files.crazygames.com//papasscooperiahd1","files.crazygames.com//papasscooperiahd2","files.crazygames.com//papasscooperiahd3"],
                 makeIframe: ["psm-domain-iframe","https://papa-s-scooperia.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-scooperia",
+                lsKeys: ["//papasscooperiahd1","//papasscooperiahd2","//papasscooperiahd3"],
+                makeIframe: ["psm-domain-iframe","https://6fab0d00-7fea-436e-925a-2ff81f87692f.gdn.poki.com/"],
+                iframe: ["#psm-domain-iframe"]
+            }
+        ]
+    },
+    {
+        name:"Jacksmith",
+        saveName: "jacksmith_save",
+        saveIdentifier: "21",
+        hosts:[
+            {
+                hostname: "www.coolmathgames.com",
+                pathname: "/0-jacksmith",
+                lsKeys: ["//jacksmith_1","//jacksmith_2","//jacksmith_3"]
+            },
+            {
+                hostname: "www.crazygames.com",
+                pathname: "/game/jacksmith",
+                lsKeys: ["files.crazygames.com//jacksmith_1","files.crazygames.com//jacksmith_2","files.crazygames.com//jacksmith_3"],
+                makeIframe: ["psm-domain-iframe","https://jacksmith.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     }
@@ -368,6 +481,18 @@ const pbsmCSS = `
     padding-bottom: 1%;
 }
 
+#psm-cont table{
+    width: auto;
+    border-width: 0px;
+    border-radius: 0px;
+}
+
+#psm-cont table td{
+    padding: 1px;
+    background-color: none;
+    border-width: 0px;
+}
+
 .psm-imp-button, .psm-exp-button{
     background-color: #1d3752;
     color: #ffffff;
@@ -379,10 +504,19 @@ const pbsmCSS = `
 
 .psm-imp-button:hover, .psm-exp-button:hover{
     background-color: #2d4762;
+    cursor: pointer;
 }
 
 .crazygamesCont {
     border: 2px white solid;
+    padding: 3%;
+    border-radius: 10px;
+    margin-top: 1%;
+    position: relative;
+}
+
+.pokiCont{
+    background-color: #FFFFFF;
     padding: 3%;
     border-radius: 10px;
     margin-top: 1%;
@@ -487,11 +621,12 @@ function processImport(slot,data){
 
 // Setup file reader then send output to processImport
 function importSave(slot){
+    /* reintroduce later!
     if(slotHasSave(slot)){
         let overwrite = confirm("There is already data in slot " + (slot+1) + ". Are you sure you want to overwrite?");
         if(!overwrite) return;
-    }
-    const file = document.getElementById("file-picker").files[0];
+    }*/
+    const file = document.getElementById("psm-file-picker").files[0];
     const reader = new FileReader();
     reader.addEventListener("load",function(){
         processImport(slot,reader.result);
@@ -505,8 +640,8 @@ Handles button clicks from the import and export buttons
 function handleButtonClick(e,func){
     let targetSave = e.parentElement.getAttribute("data-ss")-1;
     if(func=="import"){
-        document.getElementById("file-picker").onchange = function(){importSave(targetSave)};
-        document.getElementById("file-picker").click();
+        document.getElementById("psm-file-picker").onchange = function(){importSave(targetSave)};
+        document.getElementById("psm-file-picker").click();
     }
     else if(func=="export"){
         exportSave(targetSave);
@@ -540,13 +675,14 @@ function generateHTML(){
     div.id = "psm-cont"; //papas save manager container
     div.className = "game-meta-body";
     if(window.location.host=="www.crazygames.com") div.className += " crazygamesCont";
+    else if(window.location.host=="poki.com") div.className += " pokiCont";
     let genHTML = "<h2>Save Manager</h2><p>This save manager allows you to import and export saves to ensure they are never lost. Saves can also be moved between devices. The page may need to be refreshed before imported saves are visible.</p>";
     genHTML += genTableHTML();
     div.innerHTML = genHTML;
 
     let filePicker = document.createElement("input");
     filePicker.setAttribute("type","file");
-    filePicker.id = "file-picker";
+    filePicker.id = "psm-file-picker";
     filePicker.style.display = "none";
     div.appendChild(filePicker);
 
@@ -566,6 +702,10 @@ function generateHTML(){
           let childNode = document.getElementsByClassName("GamePageDesktop_underGameContainerGrid__cdhNC")[0];
           let parentNode = document.getElementById("gamePageMainContainer");
           parentNode.insertBefore(div,childNode);
+      }
+      else if(hostname=="poki.com"){
+          let parentNode = document.getElementsByClassName("cM0dvuoLEJDmDILA2Jo8")[0];
+          parentNode.appendChild(div);
       }
     }
     catch(error){
@@ -738,8 +878,15 @@ function getHostDetails(key,value){
 }
 
 function detectGame(){
-    psm.game = getGame("pathname", window.location.pathname);
-    psm.gameHost = getHost("pathname", window.location.pathname);
+    let pathname;
+    if(window.location.hostname == "poki.com"){
+        pathname = window.location.pathname.substr(3); //remove the language code from url      e.g. https://poki.com/en/g/papas-scooperia
+    }
+    else{
+        pathname = window.location.pathname;
+    }
+    psm.game = getGame("pathname", pathname);
+    psm.gameHost = getHost("pathname", pathname);
     if(psm.gameHost) psm.hostDetails = getHostDetails("hostname",psm.gameHost.hostname);
 }
 
@@ -763,7 +910,7 @@ function initialise(){
 
     if(psm.userOptions.saveTxtExt) psm.saveExt = "txt";
     injectCSS(pbsmCSS);
-    if(window.location.host=="www.crazygames.com"){
+    if(window.location.host=="www.crazygames.com" || window.location.host=="poki.com"){
         var interval = setInterval(function(){ //for crazygames doesn't like adding html too early!
 	        if(document.readyState=="complete"){
 		        clearInterval(interval);

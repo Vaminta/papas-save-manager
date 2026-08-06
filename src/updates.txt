@@ -5,6 +5,7 @@ WORKING:
 - Callback check: 2 second timeout for if nothing is returned from iframe.
 - Misc adjustments. e.g. id names
 - Removed user options: otherPageAdjustments and preventGameLoad.
+- Added support for Jacksmith (Flipline game)
 
 VERSION 0.7.1:
 
