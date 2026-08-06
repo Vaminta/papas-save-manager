@@ -34,6 +34,16 @@
 // @match       https://acb24546-6baa-476c-8948-9389513bd185.gdn.poki.com/
 // @match       https://poki.com/*/g/papas-wingeria
 // @match       https://f8bfb5ec-173d-422d-bc7c-d30fa534180c.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-hotdoggeria
+// @match       https://2162cb5c-5325-4dd8-bf9f-cdf254b77c15.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-pastaria
+// @match       https://82232179-7d0f-4f82-a6cd-48f990ff1d13.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-sushiria
+// @match       https://1d842825-5893-4d6d-a95a-fe6ef71741be.gdn.poki.com/
+// @match       https://poki.com/*/g/papas-donuteria
+// @match       https://fc0b21f8-f0d2-44fc-b334-38e007a640ce.gdn.poki.com/
+// @match       https://poki.com/*/g/jacksmith
+// @match       https://7ae4f99c-46bf-4a7a-8d8c-d2fca3ecb6cd.gdn.poki.com/
 //
 //
 //
@@ -358,6 +368,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papas-hotdoggeria",
                 lsKeys: ["//papashotdoggeria1","//papashotdoggeria2","//papashotdoggeria3"],
                 iframe: ["#game-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-hotdoggeria",
+                lsKeys: ["//papashotdoggeria1","//papashotdoggeria2","//papashotdoggeria3"],
+                makeIframe: ["psm-domain-iframe","https://2162cb5c-5325-4dd8-bf9f-cdf254b77c15.gdn.poki.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -376,6 +393,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papas-pastaria",
                 lsKeys: ["files.crazygames.com//papaspastaria1","files.crazygames.com//papaspastaria2","files.crazygames.com//papaspastaria3"],
                 makeIframe: ["psm-domain-iframe","https://papas-pastaria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-pastaria",
+                lsKeys: ["//papaspastaria1","//papaspastaria2","//papaspastaria3"],
+                makeIframe: ["psm-domain-iframe","https://82232179-7d0f-4f82-a6cd-48f990ff1d13.gdn.poki.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -396,6 +420,13 @@ psm.gameList = Object.freeze([
                 lsKeys: ["files.crazygames.com//papassushiria1","files.crazygames.com//papassushiria2","files.crazygames.com//papassushiria3"],
                 makeIframe: ["psm-domain-iframe","https://papas-sushiria.game-files.crazygames.com/"],
                 iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-sushiria",
+                lsKeys: ["//papassushiria1","//papassushiria2","//papassushiria3"],
+                makeIframe: ["psm-domain-iframe","https://1d842825-5893-4d6d-a95a-fe6ef71741be.gdn.poki.com/"],
+                iframe: ["#psm-domain-iframe"]
             }
         ]
     },
@@ -414,6 +445,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/papas-donuteria",
                 lsKeys: ["files.crazygames.com//papasdonuteria1","files.crazygames.com//papasdonuteria2","files.crazygames.com//papasdonuteria3"],
                 makeIframe: ["psm-domain-iframe","https://papas-donuteria.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/papas-donuteria",
+                lsKeys: ["//papasdonuteria1","//papasdonuteria2","//papasdonuteria3"],
+                makeIframe: ["psm-domain-iframe","https://fc0b21f8-f0d2-44fc-b334-38e007a640ce.gdn.poki.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
@@ -459,6 +497,13 @@ psm.gameList = Object.freeze([
                 pathname: "/game/jacksmith",
                 lsKeys: ["files.crazygames.com//jacksmith_1","files.crazygames.com//jacksmith_2","files.crazygames.com//jacksmith_3"],
                 makeIframe: ["psm-domain-iframe","https://jacksmith.game-files.crazygames.com/"],
+                iframe: ["#psm-domain-iframe"]
+            },
+            {
+                hostname: "poki.com",
+                pathname: "/g/jacksmith",
+                lsKeys: ["//jacksmith_1","//jacksmith_2","//jacksmith_3"],
+                makeIframe: ["psm-domain-iframe","https://7ae4f99c-46bf-4a7a-8d8c-d2fca3ecb6cd.gdn.poki.com/"],
                 iframe: ["#psm-domain-iframe"]
             }
         ]
