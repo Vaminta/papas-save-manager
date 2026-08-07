@@ -3,11 +3,10 @@ WORKING:
 - Fixed injection issue with CrazyGames
 - Improved robustness of HTML injection handling. Now injects into body if specific element not found
 - Callback check: 2 second timeout for if nothing is returned from iframe (Check for failed save callback)
-- Misc adjustments. e.g. id names
+- Misc adjustments. e.g. id names, text in manager window
 - Removed user options: otherPageAdjustments and preventGameLoad
 - Added support for Jacksmith (Flipline game)
 - Added support for poki.com
-- Adjusted text in manager window.
 
 VERSION 0.7.1:
 

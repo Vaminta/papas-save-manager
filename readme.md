@@ -1,6 +1,6 @@
 
 # Papa's Save Manager
-Papa's Save Manager (PSM), formerly known as PBSM is a userscript which allows you to backup save data for the Papa's series of flash games hosted on [Coolmath Games](https://www.coolmathgames.com/papas-games) and [CrazyGames](https://www.crazygames.com/t/papa). Backing up saves allows them to be restored in the event that browser data is accidentally/ unintentionally cleared, or if you wish to play your game on another browser or device.
+Papa's Save Manager (PSM), formerly known as PBSM is a userscript which allows you to backup save data for the flash games produced by Flipline Studios hosted on [Coolmath Games](https://www.coolmathgames.com/papas-games), [CrazyGames](https://www.crazygames.com/t/papa) and [Poki](https://poki.com/en/papas). Backing up saves allows them to be restored in the event that browser data is accidentally/ unintentionally cleared, or if you wish to play your game on another browser or device.
 
 ![Preview](docs/images/installed-preview.png)
 

@@ -1,0 +1,8 @@
+Changelog 0.7.1 -> 0.8.0:
+- Added support for poki.com
+- Added support for Jacksmith (Flipline game)
+- Fixed injection issue with CrazyGames
+- Improved robustness of HTML injection handling
+- Check for failed save callback
+- Misc adjustments. e.g. id names, text in manager window
+- Removed user options: otherPageAdjustments and preventGameLoad
