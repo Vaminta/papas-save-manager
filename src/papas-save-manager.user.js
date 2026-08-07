@@ -30,7 +30,7 @@
 // @match       https://b1d28727-5791-4b62-bfa2-022a2f25b52d.gdn.poki.com/
 // @match       https://poki.com/*/g/papas-cupcakeria
 // @match       https://5dd05251-88a8-44b4-8071-9af6b7fb2a7a.gdn.poki.com/
-// @match       https://poki.com/en/g/papas-cheeseria
+// @match       https://poki.com/*/g/papas-cheeseria
 // @match       https://acb24546-6baa-476c-8948-9389513bd185.gdn.poki.com/
 // @match       https://poki.com/*/g/papas-wingeria
 // @match       https://f8bfb5ec-173d-422d-bc7c-d30fa534180c.gdn.poki.com/
@@ -87,12 +87,10 @@
 // @run-at      document-idle
 // @description Allows you to backup your save data for the Papa's series of games online
 // @homepageURL https://github.com/Vaminta/papas-save-manager
-// @downloadURL https://update.greasyfork.org/scripts/474235/Papa%27s%20Save%20Manager.user.js
-// @updateURL   https://update.greasyfork.org/scripts/474235/Papa%27s%20Save%20Manager.meta.js
 // ==/UserScript==
 
 //04/09/2023
-//20/05/2024
+//07/08/2026
 
 psm = new Object();
 
@@ -107,7 +105,7 @@ consoleOut: enables outputs to the console, useful for testing
 psm.userOptions = {
     saveTxtExt: false,
     forceImport: false,
-    consoleOut: true
+    consoleOut: false
 }
 
 // --------------
@@ -530,6 +528,11 @@ const pbsmCSS = `
     width: auto;
     border-width: 0px;
     border-radius: 0px;
+    text-align: center;
+}
+
+#psm-cont table th{
+    padding: 12px 0px 2px 0px;
 }
 
 #psm-cont table td{
@@ -721,7 +724,7 @@ function generateHTML(){
     div.className = "game-meta-body";
     if(window.location.host=="www.crazygames.com") div.className += " crazygamesCont";
     else if(window.location.host=="poki.com") div.className += " pokiCont";
-    let genHTML = "<h2>Save Manager</h2><p>This save manager allows you to import and export saves to ensure they are never lost. Saves can also be moved between devices. The page may need to be refreshed before imported saves are visible.</p>";
+    let genHTML = "<h2>Save Manager</h2><p>This save manager allows you to import and export saves. Saves can be moved between devices. The page may need to be reloaded before imported saves are visible. Please report issues on GitHub.</p>";
     genHTML += genTableHTML();
     div.innerHTML = genHTML;
 
